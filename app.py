@@ -59,7 +59,7 @@ def crear_boxplot(datos, columna, titulo, ax):
 def crear_serie_temporal(datos, columna_fecha, columna_valor, titulo, ax):
     """Crear gráfico de serie temporal para mostrar el comportamiento anual"""
     try:
-        # Buscar posibles nombres de columnas de fecha
+
         columnas_fecha_posibles = ['fecha', 'Fecha', 'FECHA', 'date', 'Date', 'año', 'Año', 'year', 'Year', 'periodo', 'Periodo']
         columna_fecha_encontrada = None
         
@@ -69,20 +69,17 @@ def crear_serie_temporal(datos, columna_fecha, columna_valor, titulo, ax):
                 break
         
         if columna_fecha_encontrada and columna_valor in datos.columns:
-            # Crear una copia de los datos para procesamiento
+
             datos_temp = datos.copy()
             
-            # Convertir la columna de fecha si es necesario
+
             try:
                 datos_temp[columna_fecha_encontrada] = pd.to_datetime(datos_temp[columna_fecha_encontrada])
             except:
-                # Si no se puede convertir a datetime, asumir que ya está en formato correcto
                 pass
-            
-            # Ordenar por fecha
+
             datos_temp = datos_temp.sort_values(columna_fecha_encontrada)
             
-            # Crear el gráfico de línea
             ax.plot(datos_temp[columna_fecha_encontrada], datos_temp[columna_valor], 
                    marker='o', linewidth=2, markersize=4)
             ax.set_title(f"Evolución Temporal de {titulo}")
@@ -90,11 +87,11 @@ def crear_serie_temporal(datos, columna_fecha, columna_valor, titulo, ax):
             ax.set_ylabel(titulo)
             ax.grid(True, alpha=0.3)
             
-            # Rotar etiquetas del eje x si es necesario
+
             plt.setp(ax.get_xticklabels(), rotation=45, ha='right')
             
         else:
-            # Si no hay columna de fecha, crear un gráfico con índice secuencial
+
             if columna_valor in datos.columns:
                 ax.plot(range(len(datos)), datos[columna_valor], 
                        marker='o', linewidth=2, markersize=4)
@@ -206,7 +203,6 @@ with tab1:
     elif indicador == "TRM":
         st.subheader("Análisis de la Tasa Representativa del Mercado (TRM)")
         
-        # Gráfico temporal
         st.write("#### Evolución Temporal de la TRM")
         fig, ax = plt.subplots(figsize=(12, 6))
         crear_serie_temporal(trm, None, "TRM", "TRM", ax)
@@ -230,7 +226,7 @@ with tab1:
     elif indicador == "PIB":
         st.subheader("Análisis del Producto Interno Bruto (PIB)")
         
-        # Gráfico temporal
+
         st.write("#### Evolución Temporal del PIB")
         fig, ax = plt.subplots(figsize=(12, 6))
         crear_serie_temporal(pib, None, "PIB", "PIB", ax)
@@ -254,7 +250,7 @@ with tab1:
     elif indicador == "Desempleo":
         st.subheader("Análisis de la Tasa de Desempleo")
         
-        # Gráfico temporal
+
         st.write("#### Evolución Temporal del Desempleo")
         fig, ax = plt.subplots(figsize=(12, 6))
         crear_serie_temporal(desempleo, None, "desempleo", "Desempleo", ax)
