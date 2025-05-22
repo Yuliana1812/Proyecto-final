@@ -24,7 +24,12 @@ def cargar_datos():
         desempleo = pd.read_csv("desempleo.csv")
         
         return ipc, trm, pib, desempleo
-    
+        
+    except Exception as e:
+        st.error(f"Error al cargar los datos: {e}")
+        st.error("No se pueden cargar los archivos CSV necesarios. Cerrando la aplicación.")
+        st.stop()  
+        return None, None, None, None
 
 ipc, trm, pib, desempleo = cargar_datos()
 
