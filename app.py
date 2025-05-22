@@ -33,9 +33,10 @@ def cargar_datos():
 
 ipc, trm, pib, desempleo = cargar_datos()
 
-tab1, tab2 = st.tabs([
+tab1, tab2, tab3 = st.tabs([
     "Análisis Univariado", 
-    "Análisis Descriptivo"
+    "Análisis Descriptivo",
+    "Conclusión general
 ])
 
 def crear_histograma(datos, columna, titulo, ax):
@@ -265,6 +266,10 @@ with tab2:
         ax.legend()
         plt.tight_layout()
         st.pyplot(fig)
+
+with tab3:
+    st.title("Conclusión general)
+    st.write("Existe una relación evidente entre el discurso del presidente y el desempeño económico. Aunque el gobierno busca posicionar su narrativa como un proyecto de cambio estructural con justicia social, la forma en que se comunican estos objetivos influye fuertemente en la percepción económica y en la respuesta de los mercados. En general, los discursos han tenido un efecto mixto: cuando son técnicos y conciliadores, pueden generar confianza y estabilidad; sin embargo, cuando son ideológicos o confrontativos, tienden a generar incertidumbre y afectan negativamente al mercado. La coherencia entre la retórica y las acciones concretas será clave para mejorar la estabilidad y la confianza en la política económica.")
     
 
    
