@@ -118,7 +118,7 @@ def mostrar_estadisticas(df, columna, titulo):
 with tab1:
     st.header("Análisis Univariado de Indicadores Económicos")
     st.write("Esta sección muestra la distribución estadística de cada indicador económico.")
-    
+    img
 
     indicador = st.selectbox(
         "Seleccione un indicador para ver su análisis univariado:",
@@ -229,7 +229,7 @@ with tab2:
         st.dataframe(df_resumen)
         
  
-        st.subheader("Comparación de Variabilidad (Coeficiente de Variación)")
+        st.subheader("Comparación de Variabilidad")
         fig, ax = plt.subplots(figsize=(10, 6))
         sns.barplot(data=df_resumen, x='Indicador', y='CV (%)', ax=ax, palette='viridis')
         ax.set_title('Coeficiente de Variación por Indicador')
