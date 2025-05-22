@@ -246,7 +246,7 @@ with tab2:
         """)
     
 
-    st.subheader("Comparación de Distribuciones (Normalizadas)")
+    st.subheader("Comparación de Distribuciones")
     
 
     indicadores_seleccionados = st.multiselect(
