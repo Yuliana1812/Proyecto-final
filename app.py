@@ -177,15 +177,15 @@ with tab1:
         
         with col1:
             fig, ax = plt.subplots(figsize=(8, 6))
-            crear_histograma(desempleo, "tasa", "Tasa de Desempleo", ax)
+            crear_histograma(desempleo, "desempleo", "desempleo", ax)
             st.pyplot(fig)
             
         with col2:
             fig, ax = plt.subplots(figsize=(8, 6))
-            crear_boxplot(desempleo, "tasa", "Tasa de Desempleo", ax)
+            crear_boxplot(desempleo, "desempleo", "desempleo", ax)
             st.pyplot(fig)
         
-        mostrar_estadisticas(desempleo, "tasa", "Tasa de Desempleo")
+        mostrar_estadisticas(desempleo, "desempleo", "desempleo")
 
 
 with tab2:
