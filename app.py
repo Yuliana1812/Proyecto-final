@@ -14,7 +14,7 @@ st.title("Análisis del Desempeño Económico durante el Gobierno de Gustavo Pet
 st.markdown("### Pontificia Universidad Javeriana")
 st.markdown("#### Análisis Económico del Gobierno Actual")
 
-
+#para reducir tiempos de carga 
 @st.cache_data
 def cargar_datos():
     try:
