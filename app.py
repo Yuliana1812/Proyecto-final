@@ -280,42 +280,4 @@ with tab2:
         st.pyplot(fig)
     
 
-    st.subheader("Análisis de Normalidad")
-    
-    try:
-        from scipy import stats
-        
-        normalidad_resultados = []
-        
-        for df, col, nombre in indicadores_info:
-            if col in df.columns:
-        
-                if len(df[col].dropna()) < 5000:
-                    stat, p_value = stats.shapiro(df[col].dropna())
-                    test_usado = "Shapiro-Wilk"
-                else:
-           
-                    stat, p_value = stats.kstest(df[col].dropna(), 'norm')
-                    test_usado = "Kolmogorov-Smirnov"
-                
-                normalidad_resultados.append({
-                    'Indicador': nombre,
-                    'Test': test_usado,
-                    'Estadístico': stat,
-                    'p-valor': p_value,
-                    'Normal (α=0.05)': 'Sí' if p_value > 0.05 else 'No'
-                })
-        
-        if normalidad_resultados:
-            df_normalidad = pd.DataFrame(normalidad_resultados)
-            st.dataframe(df_normalidad)
-            
-            st.write("""
-            **Interpretación:**
-            - Si p-valor > 0.05: Los datos siguen una distribución normal
-            - Si p-valor ≤ 0.05: Los datos NO siguen una distribución normal
-            """)
-    
-    except ImportError:
-        st.info("Para análisis de normalidad avanzada, instale scipy: pip install scipy")
-
+   
