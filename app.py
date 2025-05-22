@@ -56,6 +56,60 @@ def crear_boxplot(datos, columna, titulo, ax):
     else:
         ax.text(0.5, 0.5, f'Columna {columna} no disponible', horizontalalignment='center', verticalalignment='center')
 
+def crear_serie_temporal(datos, columna_fecha, columna_valor, titulo, ax):
+    """Crear gráfico de serie temporal para mostrar el comportamiento anual"""
+    try:
+        # Buscar posibles nombres de columnas de fecha
+        columnas_fecha_posibles = ['fecha', 'Fecha', 'FECHA', 'date', 'Date', 'año', 'Año', 'year', 'Year', 'periodo', 'Periodo']
+        columna_fecha_encontrada = None
+        
+        for col in columnas_fecha_posibles:
+            if col in datos.columns:
+                columna_fecha_encontrada = col
+                break
+        
+        if columna_fecha_encontrada and columna_valor in datos.columns:
+            # Crear una copia de los datos para procesamiento
+            datos_temp = datos.copy()
+            
+            # Convertir la columna de fecha si es necesario
+            try:
+                datos_temp[columna_fecha_encontrada] = pd.to_datetime(datos_temp[columna_fecha_encontrada])
+            except:
+                # Si no se puede convertir a datetime, asumir que ya está en formato correcto
+                pass
+            
+            # Ordenar por fecha
+            datos_temp = datos_temp.sort_values(columna_fecha_encontrada)
+            
+            # Crear el gráfico de línea
+            ax.plot(datos_temp[columna_fecha_encontrada], datos_temp[columna_valor], 
+                   marker='o', linewidth=2, markersize=4)
+            ax.set_title(f"Evolución Temporal de {titulo}")
+            ax.set_xlabel("Tiempo")
+            ax.set_ylabel(titulo)
+            ax.grid(True, alpha=0.3)
+            
+            # Rotar etiquetas del eje x si es necesario
+            plt.setp(ax.get_xticklabels(), rotation=45, ha='right')
+            
+        else:
+            # Si no hay columna de fecha, crear un gráfico con índice secuencial
+            if columna_valor in datos.columns:
+                ax.plot(range(len(datos)), datos[columna_valor], 
+                       marker='o', linewidth=2, markersize=4)
+                ax.set_title(f"Evolución Secuencial de {titulo}")
+                ax.set_xlabel("Período")
+                ax.set_ylabel(titulo)
+                ax.grid(True, alpha=0.3)
+            else:
+                ax.text(0.5, 0.5, f'Datos no disponibles para {titulo}', 
+                       horizontalalignment='center', verticalalignment='center')
+                
+    except Exception as e:
+        ax.text(0.5, 0.5, f'Error al crear gráfico temporal: {str(e)}', 
+               horizontalalignment='center', verticalalignment='center')
+
 def mostrar_estadisticas(df, columna, titulo):
     if columna in df.columns:
         stats = df[columna].describe()
@@ -122,6 +176,7 @@ with tab1:
     if indicador == "IPC":
         st.subheader("Análisis del Índice de Precios al Consumidor (IPC)")
         
+        # Gráfico temporal
         st.write("#### Evolución Temporal del IPC")
         fig, ax = plt.subplots(figsize=(12, 6))
         crear_serie_temporal(ipc, None, "IPC", "IPC", ax)
@@ -135,6 +190,11 @@ with tab1:
             crear_histograma(ipc, "IPC", "IPC", ax)
             st.pyplot(fig)
             
+            fig, ax = plt.subplots(1,1)
+            ax.hist(ipc["IPC"].dropna())
+            ax.set_title("IPC")
+            ax.axis()
+            st.pyplot(fig)
             
         with col2:
             fig, ax = plt.subplots(figsize=(8, 6))
@@ -145,6 +205,13 @@ with tab1:
         
     elif indicador == "TRM":
         st.subheader("Análisis de la Tasa Representativa del Mercado (TRM)")
+        
+        # Gráfico temporal
+        st.write("#### Evolución Temporal de la TRM")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        crear_serie_temporal(trm, None, "TRM", "TRM", ax)
+        plt.tight_layout()
+        st.pyplot(fig)
         
         col1, col2 = st.columns(2)
         
@@ -163,6 +230,13 @@ with tab1:
     elif indicador == "PIB":
         st.subheader("Análisis del Producto Interno Bruto (PIB)")
         
+        # Gráfico temporal
+        st.write("#### Evolución Temporal del PIB")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        crear_serie_temporal(pib, None, "PIB", "PIB", ax)
+        plt.tight_layout()
+        st.pyplot(fig)
+        
         col1, col2 = st.columns(2)
         
         with col1:
@@ -179,6 +253,13 @@ with tab1:
         
     elif indicador == "Desempleo":
         st.subheader("Análisis de la Tasa de Desempleo")
+        
+        # Gráfico temporal
+        st.write("#### Evolución Temporal del Desempleo")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        crear_serie_temporal(desempleo, None, "desempleo", "Desempleo", ax)
+        plt.tight_layout()
+        st.pyplot(fig)
         
         col1, col2 = st.columns(2)
         
@@ -277,6 +358,4 @@ with tab2:
 with tab3:
     st.title("Conclusión general")
     st.write("Existe una relación evidente entre el discurso del presidente y el desempeño económico. Aunque el gobierno busca posicionar su narrativa como un proyecto de cambio estructural con justicia social, la forma en que se comunican estos objetivos influye fuertemente en la percepción económica y en la respuesta de los mercados. En general, los discursos han tenido un efecto mixto: cuando son técnicos y conciliadores, pueden generar confianza y estabilidad; sin embargo, cuando son ideológicos o confrontativos, tienden a generar incertidumbre y afectan negativamente al mercado. La coherencia entre la retórica y las acciones concretas será clave para mejorar la estabilidad y la confianza en la política económica.")
-    
 
-   
