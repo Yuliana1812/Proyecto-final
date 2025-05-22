@@ -25,27 +25,6 @@ def cargar_datos():
         
         return ipc, trm, pib, desempleo
     
-    except Exception as e:
-        st.error(f"Error al cargar los datos: {e}")
-        n_observaciones = 100
-        
-        ipc = pd.DataFrame({
-            'IPC': np.random.normal(100, 5, n_observaciones)
-        })
-        
-        trm = pd.DataFrame({
-            'TRM': np.random.normal(3800, 200, n_observaciones)
-        })
-        
-        pib = pd.DataFrame({
-            'PIB': np.random.normal(250000, 10000, n_observaciones)
-        })
-        
-        desempleo = pd.DataFrame({
-            'tasa': np.random.normal(12, 2, n_observaciones)
-        })
-        
-        return ipc, trm, pib, desempleo
 
 ipc, trm, pib, desempleo = cargar_datos()
 
