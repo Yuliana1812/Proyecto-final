@@ -36,7 +36,7 @@ ipc, trm, pib, desempleo = cargar_datos()
 tab1, tab2, tab3 = st.tabs([
     "Análisis Univariado", 
     "Análisis Descriptivo",
-    "Conclusión general
+    "Conclusión general"
 ])
 
 def crear_histograma(datos, columna, titulo, ax):
