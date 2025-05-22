@@ -122,6 +122,12 @@ with tab1:
     if indicador == "IPC":
         st.subheader("Análisis del Índice de Precios al Consumidor (IPC)")
         
+        st.write("#### Evolución Temporal del IPC")
+        fig, ax = plt.subplots(figsize=(12, 6))
+        crear_serie_temporal(ipc, None, "IPC", "IPC", ax)
+        plt.tight_layout()
+        st.pyplot(fig)
+        
         col1, col2 = st.columns(2)
         
         with col1:
@@ -129,11 +135,6 @@ with tab1:
             crear_histograma(ipc, "IPC", "IPC", ax)
             st.pyplot(fig)
             
-            fig, ax = plt.subplots(1,1)
-            ax.hist(ipc["IPC"].dropna())
-            ax.set_title("IPC")
-            ax.axis()
-            st.pyplot(fig)
             
         with col2:
             fig, ax = plt.subplots(figsize=(8, 6))
