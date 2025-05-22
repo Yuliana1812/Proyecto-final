@@ -118,7 +118,13 @@ def mostrar_estadisticas(df, columna, titulo):
 with tab1:
     st.header("Análisis Univariado de Indicadores Económicos")
     st.write("Esta sección muestra la distribución estadística de cada indicador económico.")
-    st.image("imagen1.png", caption="Análisis de frecuencia")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image("imagen1.png", caption="Análisis de frecuencia")
+    with col2:
+        st.image("imagen2.png", caption="Análisis de frecuencia")
+    with col3:
+        st.image("imagen3.png", caption="Análisis de frecuencia")
 
     indicador = st.selectbox(
         "Seleccione un indicador para ver su análisis univariado:",
