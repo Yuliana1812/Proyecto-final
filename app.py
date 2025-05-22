@@ -268,7 +268,7 @@ with tab2:
         st.pyplot(fig)
 
 with tab3:
-    st.title("Conclusión general)
+    st.title("Conclusión general")
     st.write("Existe una relación evidente entre el discurso del presidente y el desempeño económico. Aunque el gobierno busca posicionar su narrativa como un proyecto de cambio estructural con justicia social, la forma en que se comunican estos objetivos influye fuertemente en la percepción económica y en la respuesta de los mercados. En general, los discursos han tenido un efecto mixto: cuando son técnicos y conciliadores, pueden generar confianza y estabilidad; sin embargo, cuando son ideológicos o confrontativos, tienden a generar incertidumbre y afectan negativamente al mercado. La coherencia entre la retórica y las acciones concretas será clave para mejorar la estabilidad y la confianza en la política económica.")
     
 
