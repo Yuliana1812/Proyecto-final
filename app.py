@@ -4,19 +4,17 @@ import seaborn as sns
 import streamlit as st
 import numpy as np
 
-# Configuración de la página
 st.set_page_config(
     page_title="Análisis Económico Gobierno Petro",
-    page_icon="📊",
     layout="wide"
 )
 
-# Título principal
+
 st.title("Análisis del Desempeño Económico durante el Gobierno de Gustavo Petro")
 st.markdown("### Pontificia Universidad Javeriana")
 st.markdown("#### Análisis Económico del Gobierno Actual")
 
-# Carga de datos
+
 @st.cache_data
 def cargar_datos():
     try:
@@ -29,7 +27,6 @@ def cargar_datos():
     
     except Exception as e:
         st.error(f"Error al cargar los datos: {e}")
-        # Crear datos de ejemplo si no se encuentran los archivos
         n_observaciones = 100
         
         ipc = pd.DataFrame({
@@ -50,16 +47,13 @@ def cargar_datos():
         
         return ipc, trm, pib, desempleo
 
-# Cargar datos
 ipc, trm, pib, desempleo = cargar_datos()
 
-# Crear pestañas para organizar el contenido
 tab1, tab2 = st.tabs([
     "Análisis Univariado", 
     "Análisis Descriptivo"
 ])
 
-# Función para crear histogramas
 def crear_histograma(datos, columna, titulo, ax):
     if columna in datos.columns:
         sns.histplot(datos[columna].dropna(), kde=True, ax=ax)
@@ -69,7 +63,6 @@ def crear_histograma(datos, columna, titulo, ax):
     else:
         ax.text(0.5, 0.5, f'Columna {columna} no disponible', horizontalalignment='center', verticalalignment='center')
 
-# Función para crear boxplots
 def crear_boxplot(datos, columna, titulo, ax):
     if columna in datos.columns:
         sns.boxplot(y=datos[columna].dropna(), ax=ax)
@@ -78,7 +71,6 @@ def crear_boxplot(datos, columna, titulo, ax):
     else:
         ax.text(0.5, 0.5, f'Columna {columna} no disponible', horizontalalignment='center', verticalalignment='center')
 
-# Función para estadísticas descriptivas
 def mostrar_estadisticas(df, columna, titulo):
     if columna in df.columns:
         stats = df[columna].describe()
@@ -91,7 +83,7 @@ def mostrar_estadisticas(df, columna, titulo):
             st.write(f"- Media: {stats['mean']:.4f}")
             st.write(f"- Mediana: {stats['50%']:.4f}")
             
-            # Calcular moda
+ 
             moda = df[columna].mode()
             if not moda.empty:
                 st.write(f"- Moda: {moda.iloc[0]:.4f}")
@@ -106,7 +98,7 @@ def mostrar_estadisticas(df, columna, titulo):
         st.write("**Estadísticas Completas:**")
         st.dataframe(stats.to_frame().T)
         
-        # Análisis de outliers usando el método IQR
+
         Q1 = stats['25%']
         Q3 = stats['75%']
         IQR = Q3 - Q1
@@ -122,12 +114,12 @@ def mostrar_estadisticas(df, columna, titulo):
     else:
         st.write(f"Columna {columna} no disponible para {titulo}")
 
-# PESTAÑA 1: ANÁLISIS UNIVARIADO
+
 with tab1:
     st.header("Análisis Univariado de Indicadores Económicos")
     st.write("Esta sección muestra la distribución estadística de cada indicador económico.")
     
-    # Selección de indicador
+
     indicador = st.selectbox(
         "Seleccione un indicador para ver su análisis univariado:",
         ["IPC", "TRM", "PIB", "Desempleo"]
@@ -201,18 +193,17 @@ with tab1:
         
         mostrar_estadisticas(desempleo, "tasa", "Tasa de Desempleo")
 
-# PESTAÑA 2: ANÁLISIS DESCRIPTIVO GENERAL
+
 with tab2:
     st.header("Análisis Descriptivo General")
     st.write("Esta sección presenta un resumen estadístico completo de todos los indicadores económicos.")
     
-    # Resumen estadístico de todos los indicadores
     st.subheader("Resumen Estadístico Comparativo")
     
-    # Crear dataframe resumen
+
     resumen_data = []
     
-    # Procesar cada indicador
+
     indicadores_info = [
         (ipc, "IPC", "IPC"),
         (trm, "TRM", "TRM"), 
@@ -237,7 +228,7 @@ with tab2:
         df_resumen = pd.DataFrame(resumen_data)
         st.dataframe(df_resumen)
         
-        # Gráfico comparativo de coeficientes de variación
+ 
         st.subheader("Comparación de Variabilidad (Coeficiente de Variación)")
         fig, ax = plt.subplots(figsize=(10, 6))
         sns.barplot(data=df_resumen, x='Indicador', y='CV (%)', ax=ax, palette='viridis')
@@ -254,10 +245,10 @@ with tab2:
         - CV ≥ 30%: Variabilidad alta
         """)
     
-    # Visualización comparativa de distribuciones
+
     st.subheader("Comparación de Distribuciones (Normalizadas)")
     
-    # Selección múltiple de indicadores
+
     indicadores_seleccionados = st.multiselect(
         "Seleccione los indicadores para comparar sus distribuciones:",
         ["IPC", "TRM", "PIB", "Desempleo"],
@@ -288,7 +279,7 @@ with tab2:
         plt.tight_layout()
         st.pyplot(fig)
     
-    # Análisis de normalidad
+
     st.subheader("Análisis de Normalidad")
     
     try:
@@ -298,12 +289,12 @@ with tab2:
         
         for df, col, nombre in indicadores_info:
             if col in df.columns:
-                # Test de Shapiro-Wilk (para muestras pequeñas < 5000)
+        
                 if len(df[col].dropna()) < 5000:
                     stat, p_value = stats.shapiro(df[col].dropna())
                     test_usado = "Shapiro-Wilk"
                 else:
-                    # Test de Kolmogorov-Smirnov para muestras grandes
+           
                     stat, p_value = stats.kstest(df[col].dropna(), 'norm')
                     test_usado = "Kolmogorov-Smirnov"
                 
