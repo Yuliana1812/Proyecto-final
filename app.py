@@ -202,7 +202,7 @@ with tab2:
         (ipc, "IPC", "IPC"),
         (trm, "TRM", "TRM"), 
         (pib, "PIB", "PIB"),
-        (desempleo, "tasa", "Desempleo")
+        (desempleo, "desempleo", "Desempleo")
     ]
     
     for df, col, nombre in indicadores_info:
@@ -257,7 +257,7 @@ with tab2:
                 datos_norm = (pib["PIB"] - pib["PIB"].min()) / (pib["PIB"].max() - pib["PIB"].min())
                 sns.histplot(datos_norm, alpha=0.7, label=indicador, kde=True, ax=ax)
             elif indicador == "Desempleo" and "tasa" in desempleo.columns:
-                datos_norm = (desempleo["tasa"] - desempleo["tasa"].min()) / (desempleo["tasa"].max() - desempleo["tasa"].min())
+                datos_norm = (desempleo["desempleo"] - desempleo["desempleo"].min()) / (desempleo["desempleo"].max() - desempleo["desempleo"].min())
                 sns.histplot(datos_norm, alpha=0.7, label=indicador, kde=True, ax=ax)
         
         ax.set_title('Comparación de Distribuciones Normalizadas')
