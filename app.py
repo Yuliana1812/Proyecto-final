@@ -187,11 +187,6 @@ with tab1:
             crear_histograma(ipc, "IPC", "IPC", ax)
             st.pyplot(fig)
             
-            fig, ax = plt.subplots(1,1)
-            ax.hist(ipc["IPC"].dropna())
-            ax.set_title("IPC")
-            ax.axis()
-            st.pyplot(fig)
             
         with col2:
             fig, ax = plt.subplots(figsize=(8, 6))
