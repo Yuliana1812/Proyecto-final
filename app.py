@@ -247,12 +247,6 @@ with tab2:
         plt.tight_layout()
         st.pyplot(fig)
         
-        st.write("""
-        **Interpretación del Coeficiente de Variación:**
-        - CV < 15%: Variabilidad baja
-        - 15% ≤ CV < 30%: Variabilidad moderada  
-        - CV ≥ 30%: Variabilidad alta
-        """)
     
 
     st.subheader("Comparación de Distribuciones")
